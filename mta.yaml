@@ -1,0 +1,38 @@
+_schema-version: "3.2"
+ID: ztravelapp2921
+description: Travel and Booking
+version: 0.0.1
+modules:
+- name: ztravelapp2921-deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: ztravelapp2921-html5-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - ztravelapp2921.zip
+      name: ztravelapp2921
+      target-path: resources/
+- name: ztravelapp2921
+  type: html5
+  path: .
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: ztravelapp2921-html5-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
